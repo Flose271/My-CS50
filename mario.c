@@ -22,13 +22,12 @@ int main(void)
         
         //Prints the air before the blocks
         air(air_value);
-        //Prints the blocks
+        //Prints the blocks on the left
         blocks(blocks_value);
         //Prints the gap between the blocks
         printf("  ");
-        //Repeats for the other side
+        //Prints the blocks on the right
         blocks(blocks_value);
-        air(air_value);
         //New line
         printf("\n");
     }
