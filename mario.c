@@ -12,7 +12,7 @@ int main(void)
     {
         n = get_int("Size: ");
     }
-    while(n<1);
+    while(n<1 || n>8);
     for (int i=0; i<n; i++)
     {
         //Number of 'air' before and after the blocks
