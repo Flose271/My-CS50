@@ -25,7 +25,7 @@ int main(void)
         //Prints the blocks
         blocks(blocks_value);
         //Prints the gap between the blocks
-        printf(" ");
+        printf("  ");
         //Repeats for the other side
         blocks(blocks_value);
         air(air_value);
