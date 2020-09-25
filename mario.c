@@ -15,7 +15,7 @@ int main(void)
     while(n<1 || n>8);
     for (int i=0; i<n; i++)
     {
-        //Number of 'air' before and after the blocks
+        //Number of 'air' before the blocks
         int air_value = n - i - 1;
         //Number of 'blocks' on each side
         int blocks_value = i + 1;
