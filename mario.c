@@ -12,8 +12,8 @@ int main(void)
     {
         n = get_int("Size: ");
     }
-    while(n<1 || n>8);
-    for (int i=0; i<n; i++)
+    while (n < 1 || n > 8);
+    for (int i = 0; i < n; i++)
     {
         //Number of 'air' before the blocks
         int air_value = n - i - 1;
@@ -35,7 +35,8 @@ int main(void)
 
 void air(int n)
 {
-    for (int i=0; i<n; i++)
+    //prints " " n times
+    for (int i = 0; i < n; i++)
     {
         printf(" ");
     }
@@ -43,7 +44,8 @@ void air(int n)
 
 void blocks(int n)
 {
-    for (int i=0; i<n; i++)
+    //prints "#" n times
+    for (int i = 0; i < n; i++)
     {
         printf("#");
     }
