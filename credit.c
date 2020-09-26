@@ -26,7 +26,16 @@ int main(void)
         //If i is even, we double the digit and add it to the sum.
         if(i%2 == 0)
         {
-            sum += 2*digit;
+            if(2*digit<10)
+            {
+                sum += 2*digit;
+            }
+            else
+            {
+                sum += 1;
+                sum += (2*digit)%10;
+            }
+            
         }
         //If i is an odd, we add the digit to the sum
         else
@@ -35,7 +44,7 @@ int main(void)
         }
     }
 
-    printf("%i",sum);
+    //printf("%i",sum);
     
     if(sum%10 != 0)
     {
