@@ -35,7 +35,7 @@ int main(void)
         }
     }
 
-    //printf("%i",sum);
+    printf("%i",sum);
     
     if(sum%10 != 0)
     {
