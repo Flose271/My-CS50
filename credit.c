@@ -39,23 +39,23 @@ int main(void)
     
     if(sum%10 != 0)
     {
-        printf("INVALID");
+        printf("INVALID\n");
     }
     else if(length(n) == 15 && digitof(n,15) == 3 && (digitof(n,14) == 4 || digitof(n,14) == 7))
     {
-        printf("AMEX");
+        printf("AMEX\n");
     }
     else if(length(n) == 16 && digitof(n,16) == 5 && 0<digitof(n,15) && digitof(n,15)<6)
     {
-        printf("MASTERCARD");
+        printf("MASTERCARD\n");
     }
     else if((length(n) == 13 && digitof(n,13) == 4) || (length(n) == 16 && digitof(n,16) == 4))
     {
-        printf("VISA");
+        printf("VISA\n");
     }
     else
     {
-        printf("INVALID");
+        printf("INVALID\n");
     }
 
 }
