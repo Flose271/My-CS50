@@ -59,7 +59,7 @@ int main(int argc, string arcv[])
         printf("%c", plainchar + difference);
         
     }
-    printf("\n")
+    printf("\n");
 
 }
 
