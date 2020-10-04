@@ -44,19 +44,27 @@ int main(int argc, string arcv[])
     
     for (int i = 0; i < strlen(plaintext); i++)
     {
-        int plainchar = plaintext[i];
-        int keyvalue = 0;
-        if(isupper(plainchar) != 0)
+        if(('A' <= plaintext[i] && plaintext[i] <= 'Z') || ('a' <= plaintext[i] && plaintext[i] <= 'z'))
         {
-            keyvalue = plainchar - 65;
+            int plainchar = plaintext[i];
+            int keyvalue = 0;
+            if(isupper(plainchar) != 0)
+            {
+                keyvalue = plainchar - 65;
+            }
+            else
+            {
+                keyvalue = plainchar - 97;
+            }
+        
+            int difference = toupper(key[keyvalue]) - toupper(plainchar);
+            printf("%c", plainchar + difference);
         }
         else
         {
-            keyvalue = plainchar - 97;
+            printf("%c", plaintext[i]);
         }
         
-        int difference = toupper(key[keyvalue]) - toupper(plainchar);
-        printf("%c", plainchar + difference);
         
     }
     printf("\n");
