@@ -225,6 +225,7 @@ void sort_pairs(void)
                 hold = pairs[pos-1];
                 pairs[pos-1] = pairs[pos];
                 pairs[pos] = hold;
+                pos += -1;
             }
         }
     }
