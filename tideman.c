@@ -232,11 +232,11 @@ void lock_pairs(void)
 {
     for (int i = 0; i < pair_count; i++)
     {
-        locked[sorted_pairs[i].winner][sorted_pairs[i].loser] = true;
+        locked[pairs[i].winner][pairs[i].loser] = true;
 
-        if(cycle(locked))
+        if(cycle(locked)==true)
         {
-            locked[sorted_pairs[i].winner][sorted_pairs[i].loser] = false;
+            locked[pairs[i].winner][pairs[i].loser] = false;
         }
 
     }
