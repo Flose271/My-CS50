@@ -138,16 +138,16 @@ void record_preferences(int ranks[])
     {
         for (int j = 0; j < candidate_count; j++)
         {
-            if(i != j)
+            if (i != j)
             {
                 for (int k = 0; k < candidate_count; k++)
                 {
-                    if(ranks[k] == i)
+                    if (ranks[k] == i)
                     {
                         preferences[i][j] += 1;
                         break;
                     }
-                    if(ranks[k] == j)
+                    if (ranks[k] == j)
                     {
                         break;
                     }
@@ -215,12 +215,14 @@ void tom_sort_pairs(void)
 void sort_pairs(void)
 {
     pair hold;
-    for (int i = 1; i<pair_count; i++)
+    for (int i = 1; i < pair_count; i++)
     {
         int pos = i;
         for (int j = 0; j < pair_count; j++)
         {
-            if (pos > 0 && (preferences[pairs[pos].winner][pairs[pos].loser] > preferences[pairs[pos-1].winner][pairs[pos-1].loser]))
+            int firstvalue = preferences[pairs[pos].winner][pairs[pos].loser];
+            int secondvalue = preferences[pairs[pos-1].winner][pairs[pos-1].loser];
+            if (pos > 0 && (firstvalue > secondvalue))
             {
                 hold = pairs[pos-1];
                 pairs[pos-1] = pairs[pos];
