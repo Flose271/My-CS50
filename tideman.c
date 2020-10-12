@@ -35,7 +35,8 @@ void add_pairs(void);
 void sort_pairs(void);
 void lock_pairs(void);
 void print_winner(void);
-bool rowcycle(bool matrix[][MAX], int row, bool prev_rows[]);
+void show_pairs(void);
+bool rowcycle(bool matrix[][MAX], int row);
 bool cycle(bool matrix[][MAX]);
 
 int main(int argc, string argv[])
@@ -103,22 +104,24 @@ int main(int argc, string argv[])
     }
 
     add_pairs();
-
-    for (int i = 0; i < pair_count; i++)
-    {
-        printf("Pair Winner: %i\n", pairs[i].winner);
-        printf("Pair Loser: %i\n", pairs[i].loser);
-    }
+    
+    show_pairs();
 
     sort_pairs();
 
-        for (int i = 0; i < pair_count; i++)
-    {
-        printf("Sorted Pair Winner: %i\n", sorted_pairs[i].winner);
-        printf("Sorted Pair Loser: %i\n", sorted_pairs[i].loser);
-    }
+    show_pairs();
 
     lock_pairs();
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            printf("%i", locked[i][j]);
+        }
+        printf("\n");
+    }
+
     print_winner();
     return 0;
 
@@ -210,6 +213,12 @@ void sort_pairs(void)
             }
         }
     }
+    
+    for (int i = 0; i < pair_count; i++)
+    {
+        pairs[i] = sorted_pairs[i];
+    }
+    
     return;
 }
 
@@ -219,7 +228,7 @@ void lock_pairs(void)
     for (int i = 0; i < pair_count; i++)
     {
         locked[sorted_pairs[i].winner][sorted_pairs[i].loser] = true;
-        
+
         if(cycle(locked))
         {
             locked[sorted_pairs[i].winner][sorted_pairs[i].loser] = false;
@@ -252,53 +261,51 @@ void print_winner(void)
 
 }
 
-bool rowcycle(bool matrix[][MAX], int row, bool prev_rows[])
+bool rowcycle(bool matrix[][MAX], int row)
 {
-    int next_rows[MAX];
-    int next_rows_count = 0;
-    prev_rows[row] = true;
-
-    for (int col = 0; col < candidate_count; col++)
+    bool access[candidate_count];
+    for (int i = 0; i < candidate_count; i++)
     {
-        if (matrix[row][col] == true)
+        access[i] = matrix[row][i];
+    }
+    
+    for (int n = 0; n < candidate_count; n++)
+    {
+        for (int col = 0; col < candidate_count; col++)
         {
-            if (prev_rows[col] == true)
+            if (access[col] == true)
             {
-                return true;
-            }
-            else
-            {
-                next_rows[next_rows_count] = col;
-                next_rows_count += 1;
+                for (int j = 0; j < candidate_count; j++)
+                {
+                    if (matrix[col][j] == true)
+                    {
+                        access[j] = true;
+                    }
+                }
             }
         }
     }
-
-    for (int new_row = 0; new_row < next_rows_count; new_row++)
-    {
-        if(rowcycle(matrix, next_rows[new_row], prev_rows) == true)
-        {
-            return true;
-        }
-    }
-    return false;
-
+    
+    return access[row];
 }
 
 bool cycle(bool matrix[][MAX])
 {
-    bool initial[candidate_count];
-    for (int i = 0; i < candidate_count; i++)
+    for (int row = 0; row < candidate_count; row++)
     {
-        initial[i] = false;
-    }
-    
-    for (int first_row = 0; first_row<candidate_count; first_row++)
-    {
-        if(rowcycle(matrix,first_row,initial) == true)
+        if(rowcycle(matrix,row) == true)
         {
             return true;
         }
     }
     return false;
+}
+
+void show_pairs(void)
+{
+    for (int i = 0; i < pair_count; i++)
+    {
+        printf("Pair Winner: %i\n", pairs[i].winner);
+        printf("Pair Loser: %i\n", pairs[i].loser);
+    }
 }
