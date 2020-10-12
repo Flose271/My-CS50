@@ -97,20 +97,24 @@ int main(int argc, string argv[])
 
         printf("\n");
     }
+    
+    //This prints the table of preferences
 
-    preferences_table();
+    //preferences_table();
 
+    //Each step is completed and output is shown along the way
+    
     add_pairs();
 
-    show_pairs();
+    //show_pairs();
 
     sort_pairs();
 
-    show_pairs();
+    //show_pairs();
 
     lock_pairs();
 
-    locked_table();
+    //locked_table();
 
     print_winner();
     return 0;
@@ -221,11 +225,11 @@ void sort_pairs(void)
         for (int j = 0; j < pair_count; j++)
         {
             int firstvalue = preferences[pairs[pos].winner][pairs[pos].loser];
-            int secondvalue = preferences[pairs[pos-1].winner][pairs[pos-1].loser];
+            int secondvalue = preferences[pairs[pos - 1].winner][pairs[pos - 1].loser];
             if (pos > 0 && (firstvalue > secondvalue))
             {
-                hold = pairs[pos-1];
-                pairs[pos-1] = pairs[pos];
+                hold = pairs[pos - 1];
+                pairs[pos - 1] = pairs[pos];
                 pairs[pos] = hold;
                 pos += -1;
             }
@@ -240,7 +244,7 @@ void lock_pairs(void)
     {
         locked[pairs[i].winner][pairs[i].loser] = true;
 
-        if(cycle(locked)==true)
+        if (cycle(locked) == true)
         {
             locked[pairs[i].winner][pairs[i].loser] = false;
         }
@@ -253,17 +257,17 @@ void lock_pairs(void)
 void print_winner(void)
 {
 
-    for(int col = 0; col < candidate_count; col++)
+    for (int col = 0; col < candidate_count; col++)
     {
         bool noarrows = true;
-        for (int row = 0; row < candidate_count; row++ )
+        for (int row = 0; row < candidate_count; row++)
         {
-            if(locked[row][col] == true)
+            if (locked[row][col] == true)
             {
                 noarrows = false;
             }
         }
-        if(noarrows)
+        if (noarrows)
         {
             printf("%s\n", candidates[col]);
         }
@@ -272,14 +276,21 @@ void print_winner(void)
 
 }
 
+//checks whether a loop exists that starts and finishes at a certain row.
 bool rowcycle(bool matrix[][MAX], int row)
 {
+    //creates a row called access that is equal to row we are testing
     bool access[candidate_count];
     for (int i = 0; i < candidate_count; i++)
     {
         access[i] = matrix[row][i];
     }
 
+    //checks what rows can be reached from rows contained in access
+    //this iterates candidate_count times
+    //this ensures the original row must be reached or there is no path
+    //the minimum access can grow each time in one new true value
+    //this after n iterations all values are true or no more progress is made
     for (int n = 0; n < candidate_count; n++)
     {
         for (int col = 0; col < candidate_count; col++)
@@ -300,18 +311,22 @@ bool rowcycle(bool matrix[][MAX], int row)
     return access[row];
 }
 
+//returns true if any rowcycle is true, false otherwise
 bool cycle(bool matrix[][MAX])
 {
     for (int row = 0; row < candidate_count; row++)
     {
-        if(rowcycle(matrix,row) == true)
+        if (rowcycle(matrix, row) == true)
         {
+            //So if any rowcycle is true, true is output here
             return true;
         }
     }
+    //This is reached if none of rowcycle are true, outputting false
     return false;
 }
 
+//displays all pairs in a readable format
 void show_pairs(void)
 {
     for (int i = 0; i < pair_count; i++)
@@ -323,6 +338,7 @@ void show_pairs(void)
     return;
 }
 
+//prints the preferences table by going through each row
 void preferences_table(void)
 {
     for (int i = 0; i < candidate_count; i++)
@@ -336,6 +352,7 @@ void preferences_table(void)
     return;
 }
 
+//prints the locked table by going through each row
 void locked_table(void)
 {
     for (int i = 0; i < candidate_count; i++)
