@@ -33,6 +33,7 @@ bool vote(int rank, string name, int ranks[]);
 void record_preferences(int ranks[]);
 void add_pairs(void);
 void sort_pairs(void);
+void tom_sort_pairs(void);
 void lock_pairs(void);
 void print_winner(void);
 void show_pairs(void);
@@ -188,7 +189,7 @@ void add_pairs(void)
 }
 
 // Sort pairs in decreasing order by strength of victory
-void sort_pairs(void)
+void tom_sort_pairs(void)
 {
     int sorted_pairs_added = 0;
     for (int i = voter_count; i > 0; i += -1)
@@ -209,6 +210,21 @@ void sort_pairs(void)
     }
 
     return;
+}
+
+void sort_pairs(void)
+{
+    pair temp;
+    for (int i = 1, j; i < pair_count; i++)
+    {
+        temp = pairs[i];
+        j = i - 1;
+        for (; j >= 0 && preferences[pairs[j].winner][pairs[j].loser] < preferences[temp.winner][temp.loser]; j--)
+        {
+            pairs[j + 1] = pairs[j];
+        }
+        pairs[j + 1] = temp;
+    }
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
