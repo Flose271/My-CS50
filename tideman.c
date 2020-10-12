@@ -36,6 +36,8 @@ void sort_pairs(void);
 void lock_pairs(void);
 void print_winner(void);
 void show_pairs(void);
+void preferences_table(void);
+void locked_table(void);
 bool rowcycle(bool matrix[][MAX], int row);
 bool cycle(bool matrix[][MAX]);
 
@@ -95,38 +97,23 @@ int main(int argc, string argv[])
         printf("\n");
     }
 
-    for (int i = 0; i < candidate_count; i++)
-    {
-        for (int j = 0; j < candidate_count; j++)
-        {
-            printf("%i\n", preferences[i][j]);
-        }
-    }
+    //preferences_table();
 
     add_pairs();
-    
-    printf("----------\n");
-    
-    show_pairs();
-    
-    printf("----------\n");
+
+    //printf("----------\n");
+
+    //show_pairs();
+
+    //printf("----------\n");
 
     sort_pairs();
 
-    show_pairs();
-    
-    printf("----------\n");
+    //show_pairs();
+
+    //printf("----------\n");
 
     lock_pairs();
-
-    for (int i = 0; i < candidate_count; i++)
-    {
-        for (int j = 0; j < candidate_count; j++)
-        {
-            printf("%i", locked[i][j]);
-        }
-        printf("\n");
-    }
 
     print_winner();
     return 0;
@@ -208,23 +195,23 @@ void add_pairs(void)
 void sort_pairs(void)
 {
     int sorted_pairs_added = 0;
-    for (int i = voter_count; i > voter_count/2; i += -1)
+    for (int i = voter_count; i > 0; i += -1)
     {
         for (int j = 0; j < pair_count; j++)
         {
-            if(preferences[pairs[j].winner][pairs[j].loser] == i)
+            if (preferences[pairs[j].winner][pairs[j].loser] == i)
             {
                 sorted_pairs[sorted_pairs_added] = pairs[j];
                 sorted_pairs_added += 1;
             }
         }
     }
-    
+
     for (int i = 0; i < pair_count; i++)
     {
         pairs[i] = sorted_pairs[i];
     }
-    
+
     return;
 }
 
@@ -274,7 +261,7 @@ bool rowcycle(bool matrix[][MAX], int row)
     {
         access[i] = matrix[row][i];
     }
-    
+
     for (int n = 0; n < candidate_count; n++)
     {
         for (int col = 0; col < candidate_count; col++)
@@ -291,7 +278,7 @@ bool rowcycle(bool matrix[][MAX], int row)
             }
         }
     }
-    
+
     return access[row];
 }
 
@@ -314,4 +301,30 @@ void show_pairs(void)
         printf("Pair Winner: %i\n", pairs[i].winner);
         printf("Pair Loser: %i\n", pairs[i].loser);
     }
+    return;
+}
+
+void preferences_table(void)
+{
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            printf("%i\n", preferences[i][j]);
+        }
+    }
+    return;
+}
+
+void locked_table(void)
+{
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            printf("%i", locked[i][j]);
+        }
+        printf("\n");
+    }
+    return;
 }
