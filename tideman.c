@@ -97,23 +97,19 @@ int main(int argc, string argv[])
         printf("\n");
     }
 
-    //preferences_table();
+    preferences_table();
 
     add_pairs();
 
-    //printf("----------\n");
-
-    //show_pairs();
-
-    //printf("----------\n");
+    show_pairs();
 
     sort_pairs();
 
-    //show_pairs();
-
-    //printf("----------\n");
+    show_pairs();
 
     lock_pairs();
+
+    locked_table();
 
     print_winner();
     return 0;
@@ -301,6 +297,7 @@ void show_pairs(void)
         printf("Pair Winner: %i\n", pairs[i].winner);
         printf("Pair Loser: %i\n", pairs[i].loser);
     }
+    printf("----------\n");
     return;
 }
 
@@ -313,6 +310,7 @@ void preferences_table(void)
             printf("%i\n", preferences[i][j]);
         }
     }
+    printf("----------\n");
     return;
 }
 
@@ -326,5 +324,6 @@ void locked_table(void)
         }
         printf("\n");
     }
+    printf("----------\n");
     return;
 }
