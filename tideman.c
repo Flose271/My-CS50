@@ -105,11 +105,17 @@ int main(int argc, string argv[])
 
     add_pairs();
     
+    printf("----------\n");
+    
     show_pairs();
+    
+    printf("----------\n");
 
     sort_pairs();
 
     show_pairs();
+    
+    printf("----------\n");
 
     lock_pairs();
 
@@ -202,7 +208,7 @@ void add_pairs(void)
 void sort_pairs(void)
 {
     int sorted_pairs_added = 0;
-    for (int i = voter_count; i > 0; i += -1)
+    for (int i = voter_count; i > voter_count/2; i += -1)
     {
         for (int j = 0; j < pair_count; j++)
         {
