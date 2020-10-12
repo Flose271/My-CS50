@@ -214,16 +214,19 @@ void tom_sort_pairs(void)
 
 void sort_pairs(void)
 {
-    pair temp;
-    for (int i = 1, j; i < pair_count; i++)
+    pair hold;
+    for (int i = 1; i<pair_count; i++)
     {
-        temp = pairs[i];
-        j = i - 1;
-        for (; j >= 0 && preferences[pairs[j].winner][pairs[j].loser] < preferences[temp.winner][temp.loser]; j--)
+        int pos = i;
+        for (int j = 0; j < pair_count; j++)
         {
-            pairs[j + 1] = pairs[j];
+            if (pos > 0 && (preferences[pairs[pos].winner][pairs[pos].loser] > preferences[pairs[pos-1].winner][pairs[pos-1].loser]))
+            {
+                hold = pairs[pos-1];
+                pairs[pos-1] = pairs[pos];
+                pairs[pos] = hold;
+            }
         }
-        pairs[j + 1] = temp;
     }
 }
 
