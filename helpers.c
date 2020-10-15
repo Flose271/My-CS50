@@ -1,5 +1,6 @@
 #include "helpers.h"
 #include <math.h>
+#include <stdlib.h>
 
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
@@ -101,6 +102,73 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 // Detect edges
 void edges(int height, int width, RGBTRIPLE image[height][width])
 {
+    //Make a copy of the original image
+    RGBTRIPLE copy[height][width];
+    for (int row = 0; row < height; row++)
+    {
+        for (int col = 0; col < width; col++)
+        {
+            copy[row][col] = image[row][col];
+        }
+    }
+    
+    for (int row = 0; row < height; row++)
+    {
+        for (int col = 0; col < width; col++)
+        {
+            //Set up X kernel
+            int xred = 0;
+            int xgreen = 0;
+            int xblue = 0;
+            
+            //Set up Y kernel
+            int yred = 0;
+            int ygreen = 0;
+            int yblue = 0;
+            
+            //Working on level of individual pixel
+            for (int xd = -1; xd < 2; xd++)
+            {
+                for (int yd = -1; yd < 2; yd++)
+                {
+                    //If this reffered to pixel is valid
+                    if(col + xd >= 0 && col + xd < width && row + yd >= 0 && row + yd < height)
+                    {
+                        xred += (xd)*(2-abs(yd))*copy[row+yd][col+xd].rgbtRed;
+                        xgreen += (xd)*(2-abs(yd))*copy[row+yd][col+xd].rgbtGreen;
+                        xblue += (xd)*(2-abs(yd))*copy[row+yd][col+xd].rgbtGreen;
+                        
+                        yred += (yd)*(2-abs(xd))*copy[row+yd][col+xd].rgbtRed;
+                        ygreen += (yd)*(2-abs(xd))*copy[row+yd][col+xd].rgbtGreen;
+                        yblue += (yd)*(2-abs(xd))*copy[row+yd][col+xd].rgbtBlue;
+                        
+                        int red = round(sqrt(pow(xred,2) + pow(yred,2)));
+                        if(red > 255)
+                        {
+                            red = 255;
+                        }
+                        
+                        int green = round(sqrt(pow(xgreen,2) + pow(ygreen,2)));
+                        if(green > 255)
+                        {
+                            green = 255;
+                        }
+                        
+                        int blue = round(sqrt(pow(xblue,2) + pow(yblue,2)));
+                        if(blue > 255)
+                        {
+                            blue = 255;
+                        }
+                        
+                        image[row][col].rgbtRed = red;
+                        image[row][col].rgbtGreen = green;
+                        image[row][col].rgbtBlue = blue;
+                        
+                    }
+                }
+            }
+        }
+    }
     
     return;
 }
