@@ -136,7 +136,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                     {
                         xred += (xd)*(2-abs(yd))*copy[row+yd][col+xd].rgbtRed;
                         xgreen += (xd)*(2-abs(yd))*copy[row+yd][col+xd].rgbtGreen;
-                        xblue += (xd)*(2-abs(yd))*copy[row+yd][col+xd].rgbtGreen;
+                        xblue += (xd)*(2-abs(yd))*copy[row+yd][col+xd].rgbtBlue;
                         
                         yred += (yd)*(2-abs(xd))*copy[row+yd][col+xd].rgbtRed;
                         ygreen += (yd)*(2-abs(xd))*copy[row+yd][col+xd].rgbtGreen;
