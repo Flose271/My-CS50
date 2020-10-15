@@ -1,59 +1,64 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include <cs50.h>
+#include <math.h>
 
 int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
+        printf("Usage: ./recover file\n");
         return 1;
     }
     
-    FILE *write_pointer = NULL;
-    FILE *read_pointer = fopen(argv[1], "r");
-    if (read_pointer == NULL)
+    //file is the pointer for card.raw
+    char *file = argv[1];
+    
+    //Store contents of file at inptr
+    FILE *inptr = fopen(file, "r");
+    //If the file doesn't work
+    if (inptr == NULL)
     {
-        printf("Unable to open: %s\n", argv[1]);
-        return 1;
+        printf("Couldn't open %s.\n", file);
+        return 2;
     }
     
-    int files_found = 0;
-    bool jpg_currently_open = false;
+    FILE *outptr = NULL;
+    
     unsigned char buffer[512];
+    char image_name[8];
+    int files_found = 0;
     
-    while(fread(&buffer, 512, 1, read_pointer) == 1)
+    while(fread(buffer, 512, 1, inptr) == 1)
     {
-        if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
+        //If inptr is at the beginning of a jpeg
+        if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && buffer[3] >= 0xe0 && buffer[3] <= 0xef)
         {
-            if (jpg_currently_open)
+            //If this isn't our first file
+            if(files_found != 0)
             {
-                fclose(write_pointer);
+                fclose(outptr);
             }
-            else
+            //Naming the image
+            sprintf(image_name, "%03d.jpg", files_found);
+            //Write what is at outptr to image.
+            
+            outptr = fopen(image_name, "w");
+            if(outptr == NULL)
             {
-                char filename[8];
-                sprintf(filename, "%03i.jpg", files_found);
-                write_pointer = fopen(filename, "w");
-                files_found += 1;
+                printf("Couldn't make image %s.\n", image_name);
             }
+            files_found += 1;
         }
-
-        if (jpg_currently_open)//once new JPEGS are found
+        
+        if (outptr != NULL)
         {
-            //copy over the blocks from buffer into new file
-            fwrite(&buffer, 512, 1, write_pointer);
+            //We write 
+            fwrite(buffer, 512, 1, outptr);
         }
-
     }
-    
-    if (write_pointer == NULL)
-    {
-        fclose(write_pointer);
-    }
-    if (read_pointer == NULL)
-    {
-        fclose(read_pointer);
-    }
+    //we close the outpointer and inpointer
+    fclose(outptr);
+    fclose(inptr);
     return 0;
     
 }
