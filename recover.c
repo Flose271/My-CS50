@@ -31,13 +31,13 @@ int main(int argc, char *argv[])
     int files_found = 0;
     
     //Read through what is at inptr in blocks of 512 one at a time
-    while(fread(buffer, 512, 1, inptr) == 1)
+    while (fread(buffer, 512, 1, inptr) == 1)
     {
         //If the block starts with first 4 bytes representing jpg
         if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && buffer[3] >= 0xe0 && buffer[3] <= 0xef)
         {
             //If this isn't our first file, close outptr from previous file
-            if(files_found != 0)
+            if (files_found != 0)
             {
                 fclose(outptr);
             }
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
             //We get ready to write to image_name.
             outptr = fopen(image_name, "w");
             //If outptr is null, a problem has occured.
-            if(outptr == NULL)
+            if (outptr == NULL)
             {
                 printf("Couldn't make image %s.\n", image_name);
                 return 3;
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
             //File counter is incremented by one.
             files_found += 1;
         }
-
+        //If the outptr is valid, write the buffer to it.
         if (outptr != NULL)
         {
             fwrite(buffer, 512, 1, outptr);
