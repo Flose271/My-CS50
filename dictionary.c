@@ -29,17 +29,9 @@ node *table[N];
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
-    /*
-    int len = strlen(word);
-    char copy[LENGTH + 1];
-    for (int i = 0; i < len; i++)
-    {
-        copy[i] = tolower(word[i]);
-    }
-    */
     int hash_value = hash(word);
     node *cursor = table[hash_value];
-    
+
     while (cursor != NULL)
     {
         if (strcasecmp(cursor->word, word) == 0)
@@ -51,7 +43,7 @@ bool check(const char *word)
             cursor = cursor->next;
         }
     }
-    
+
     return false;
 }
 
@@ -82,7 +74,7 @@ bool load(const char *dictionary)
     {
         return false;
     }
-    
+
     char word[LENGTH + 1];
     while (fscanf(file, "%s", word) != EOF)
     {
@@ -92,13 +84,13 @@ bool load(const char *dictionary)
             free(new_node);
             return false;
         }
-        
+
         strcpy(new_node->word, word);
-        
+
         int hash_value = hash(new_node->word);
-        
+
         node *firstnode = table[hash_value];
-        
+
         if(firstnode == NULL)
         {
             table[hash_value] = new_node;
@@ -110,7 +102,7 @@ bool load(const char *dictionary)
             table[hash_value] = new_node;
             word_count += 1;
         }
-        
+
     }
     fclose(file);
     return true;
@@ -125,6 +117,14 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    // TODO
-    return false;
+    node *first_word = NULL;
+    node *cursor = first_word;
+    // freeing linked lists
+    while (cursor != NULL)
+    {
+        node *temp = cursor;
+        cursor = cursor->next;
+        free(temp);
+    }
+    return true;
 }
