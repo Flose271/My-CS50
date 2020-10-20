@@ -117,14 +117,21 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    node *first_word = NULL;
-    node *cursor = first_word;
-    // freeing linked lists
-    while (cursor != NULL)
+    for (int bucket = 0; bucket < N; bucket++)
     {
-        node *temp = cursor;
-        cursor = cursor->next;
-        free(temp);
+        node *firstnode = table[bucket];
+        
+        if(firstnode != NULL)
+        {
+            node *cursor = firstnode;
+            node *tmp = NULL;
+            while(cursor != NULL)
+            {
+                tmp = cursor;
+                free(cursor);
+                cursor = tmp->next;
+            }
+        }
     }
     return true;
 }
