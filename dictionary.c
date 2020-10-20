@@ -93,7 +93,6 @@ bool load(const char *dictionary)
 
         if(firstnode == NULL)
         {
-            firstnode->next = NULL;
             table[hash_value] = new_node;
             word_count += 1;
         }
