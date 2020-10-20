@@ -127,9 +127,9 @@ bool unload(void)
             node *tmp = NULL;
             while(cursor != NULL)
             {
-                tmp = cursor;
+                *tmp = *cursor;
                 free(cursor);
-                cursor = tmp->next;
+                *cursor = *tmp->next;
             }
         }
     }
