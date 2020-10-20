@@ -79,7 +79,6 @@ bool load(const char *dictionary)
     while (fscanf(file, "%s", word) != EOF)
     {
         node *new_node = malloc(sizeof(node));
-        memset(new_node, 0, sizeof(node));
         if (new_node == NULL)
         {
             free(new_node);
@@ -94,6 +93,7 @@ bool load(const char *dictionary)
 
         if(firstnode == NULL)
         {
+            firstnode->next = NULL;
             table[hash_value] = new_node;
             word_count += 1;
         }
