@@ -132,8 +132,6 @@ bool unload(void)
                 cursor = tmp->next;
             }
         }
-        
-        free(firstnode);
     }
     return true;
 }
