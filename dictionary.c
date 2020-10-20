@@ -84,7 +84,9 @@ bool load(const char *dictionary)
             free(new_node);
             return false;
         }
-
+        
+        new_node->next = NULL;
+        
         strcpy(new_node->word, word);
 
         int hash_value = hash(new_node->word);
