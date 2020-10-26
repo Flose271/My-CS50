@@ -18,4 +18,4 @@ if(index > 16):
 if(index < 1):
     print("Under Grade 1")
 else:
-    print(round(index))
+    print("Grade " + str(round(index)))
