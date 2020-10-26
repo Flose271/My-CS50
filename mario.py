@@ -5,9 +5,9 @@ while(not 0 < n < 9):
     try:
         n = int(n)
     except:
-        pass
+        n = 0
     
-for i in range(1,n + 1):
+for i in range(1, n + 1):
     layer = ""
     layer += " " * (n - i)
     layer += "#" * i
