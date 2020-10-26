@@ -46,11 +46,11 @@ for i in range(len(strs)):
     
 strcounts = [str(s) for s in strcounts]
 
-print(dna)
+#print(dna)
 
-print(strcounts)
+#print(strcounts)
 
-print(people)
+#print(people)
 
 match = False
 for row in people:
