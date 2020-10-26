@@ -5,6 +5,7 @@ def sumdigits(integer):
     for letter in string:
         total += int(letter)
     return total
+    
 
 # Gets an integer input
 while(True):
