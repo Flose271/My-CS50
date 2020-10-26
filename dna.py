@@ -1,30 +1,30 @@
 from csv import reader, DictReader
 from sys import argv
 
-def stringin(string,x):
+
+def stringin(string, x):
     count = 0
     maxcount = 0
     start = 0
     while True:
         snippet = string[start:start+len(x)]
-        #print(snippet)
+        # print(snippet)
         if(snippet == x):
-            #print("True")
+            # print("True")
             count += 1
             start += len(x)
         else:
-            #print("False")
+            # print("False")
             if(count > maxcount):
                 maxcount = count
             count = 0
             start += 1
-        #print(count)
+        # print(count)
         if start > (len(string) - len(x) + 1):
             break
         
     return maxcount
     
-
 
 if len(argv) < 3:
     print("usage error, dna.py sequence.txt database.csv")
@@ -46,11 +46,11 @@ for i in range(len(strs)):
     
 strcounts = [str(s) for s in strcounts]
 
-#print(dna)
+# print(dna)
 
-#print(strcounts)
+# print(strcounts)
 
-#print(people)
+# print(people)
 
 match = False
 for row in people:
