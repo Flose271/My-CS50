@@ -3,12 +3,28 @@ from sys import argv
 
 def stringin(string,x):
     count = 0
-    for start in range(len(string) - len(x) + 1):
+    maxcount = 0
+    start = 0
+    while True:
         snippet = string[start:start+len(x)]
+        #print(snippet)
         if(snippet == x):
+            #print("True")
             count += 1
-    return count
+            start += len(x)
+        else:
+            #print("False")
+            if(count > maxcount):
+                maxcount = count
+            count = 0
+            start += 1
+        #print(count)
+        if start > (len(string) - len(x) + 1):
+            break
+        
+    return maxcount
     
+
 
 if len(argv) < 3:
     print("usage error, dna.py sequence.txt database.csv")
@@ -29,6 +45,9 @@ for i in range(len(strs)):
     strcounts[i] = stringin(dna, strs[i])
     
 strcounts = [str(s) for s in strcounts]
+
+print(dna)
+
 print(strcounts)
 
 print(people)
